@@ -4,8 +4,9 @@ import { deleteUser } from '../controllers/usersController';
 
 const router = Router();
 
-router.get('/', getUsers);        // GET /users
-router.post('/', createUser);     // POST /users
-router.delete('/:id', deleteUser);
+//users
+router.get('/', getUsers);         // GET /users
+router.post('/', createUser);      // POST /users
+router.delete('/:id', deleteUser); // DELETE /users/:id
 
 export default router;

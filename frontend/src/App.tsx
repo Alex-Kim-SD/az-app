@@ -26,14 +26,11 @@ function App() {
   }, []);
 
   return (
-    <div className="App">
+    <div className="App"> {/* current homepage component */}
       <h1>User Dashboard</h1>
-      <ApiTester /> {/* JSX funcitonal component for API tester */}
-      {/* Form to create a new user */}
-      <CreateUserForm onUserCreated={fetchUsers} />
-
-      {/* Display list of users */}
-      <UserList users={users} onUserDeleted={fetchUsers} />
+      <ApiTester /> {/* JSX functional component for API tester */}
+      <CreateUserForm onUserCreated={fetchUsers} />  {/* Form to create a new user */}
+      <UserList users={users} onUserDeleted={fetchUsers} /> {/* Display list of users */}
     </div>
   );
 }

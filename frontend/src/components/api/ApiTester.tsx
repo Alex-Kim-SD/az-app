@@ -1,96 +1,93 @@
-// Import React and useState hook for state management
 import React, { useState } from 'react';
+import './ApiTester.css';
 
-// Define a functional component named ApiTester
+// This component allows users to test API endpoints by sending GET, POST, or DELETE requests.
 const ApiTester: React.FC = () => {
-  // State to track which HTTP method the user selects (GET, POST, DELETE, etc.)
+  // Form state
   const [method, setMethod] = useState('GET');
   const [endpoint, setEndpoint] = useState('/users');
   const [body, setBody] = useState('{}');
+
+  // Server response
   const [response, setResponse] = useState<string | null>(null);
 
-  // Function that runs when the "Send" button is clicked
+  // Send the request
   const sendRequest = async () => {
     try {
-      // Make a request to the backend using fetch
       const res = await fetch(`http://localhost:4000${endpoint}`, {
-        method, // Use selected method (GET, POST, DELETE, etc.)
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        // Only send a body if it's not a GET or DELETE request
+        method,
+        headers: { 'Content-Type': 'application/json' },
         body: method !== 'GET' && method !== 'DELETE' ? body : undefined,
       });
 
-      // Convert the response to JSON
       const data = await res.json();
-
-      // Format and store the response for display
       setResponse(JSON.stringify(data, null, 2));
     } catch (err: any) {
-      // If there's an error (e.g. network or server), show it
       setResponse(`Error: ${err.message}`);
     }
   };
 
-  // The JSX that renders the UI for the API Tester
+  // Preload GPT text-only example
+  const fillGptPrompt = () => {
+    setMethod('POST');
+    setEndpoint('/openai');
+    setBody(JSON.stringify(
+      {
+        question: 'What are three fun facts about the ocean?',
+      },
+      null,
+      2
+    ));
+  };
+
   return (
-    <div style={{ border: '1px solid #ccc', padding: '1rem', marginTop: '2rem' }}>
+    <div className="api-tester">
       <h2>API Tester</h2>
 
-      {/* Dropdown to select HTTP method */}
-      <div>
+      {/* Preset example for OpenAI text input */}
+      <button className="fill-button" onClick={fillGptPrompt}>
+        Load GPT Example Prompt
+      </button>
+
+      {/* Method + Endpoint input */}
+      <div className="method-endpoint">
         <select value={method} onChange={(e) => setMethod(e.target.value)}>
           <option value="GET">GET</option>
           <option value="POST">POST</option>
           <option value="DELETE">DELETE</option>
         </select>
 
-        {/* Input field to type the endpoint path */}
         <input
-          style={{ width: '60%', marginLeft: '1rem' }}
           type="text"
-          placeholder="/users or /users/:id"
+          placeholder="/users or /openai"
           value={endpoint}
           onChange={(e) => setEndpoint(e.target.value)}
         />
       </div>
 
-      {/* If it's a method that accepts a body, show a textarea to type it in */}
+      {/* JSON body input for POST/PUT requests */}
       {method !== 'GET' && method !== 'DELETE' && (
-        <div>
-          <textarea
-            style={{ width: '100%', height: '100px', marginTop: '1rem' }}
-            placeholder='{"name":"Alex","email":"alex@example.com","role":"admin"}'
-            value={body}
-            onChange={(e) => setBody(e.target.value)}
-          />
-        </div>
+        <textarea
+          className="request-body"
+          placeholder='{"key":"value"}'
+          value={body}
+          onChange={(e) => setBody(e.target.value)}
+        />
       )}
 
-      {/* Send button triggers the fetch request */}
-      <button onClick={sendRequest} style={{ marginTop: '1rem' }}>
-        Send
+      {/* Send button */}
+      <button className="send-button" onClick={sendRequest}>
+        Send Request
       </button>
 
-      {/* Display the response or error after the request */}
+      {/* Server response output */}
       {response && (
-  <pre
-    style={{
-      marginTop: '1rem',
-      background: '#f6f8fa',
-      padding: '1rem',
-      userSelect: 'text',           // ✅ allows mouse highlight + copy
-      fontFamily: 'monospace',      // cleaner look for JSON
-    }}
-  >
-    {response}
-  </pre>
-)}
-
+        <pre className="response-output">
+          {response}
+        </pre>
+      )}
     </div>
   );
 };
 
-// Export the component so you can use <ApiTester /> elsewhere
 export default ApiTester;
