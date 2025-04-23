@@ -80,8 +80,6 @@ const ApiTester: React.FC = () => {
       marginTop: '1rem',
       background: '#f6f8fa',
       padding: '1rem',
-      whiteSpace: 'pre-wrap',       // wraps long lines
-      wordBreak: 'break-word',      // breaks long words
       userSelect: 'text',           // ✅ allows mouse highlight + copy
       fontFamily: 'monospace',      // cleaner look for JSON
     }}
