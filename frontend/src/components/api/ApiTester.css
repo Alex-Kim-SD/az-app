@@ -1,44 +1,111 @@
 .api-tester {
-    border: 1px solid #ccc;
-    padding: 1rem;
-    margin-top: 2rem;
+    border: 1px solid #ddd;
+    padding: 2rem;
+    margin: 2rem auto;
+    max-width: 800px;
+    background-color: #fff;
+    border-radius: 8px;
+    box-shadow: 0 1px 4px rgba(0, 0, 0, 0.05);
+    font-family: system-ui, sans-serif;
   }
   
+  .api-tester h2 {
+    margin-bottom: 1rem;
+    font-size: 1.5rem;
+    color: #222;
+  }
+  
+  /* Section for method and endpoint input */
   .method-endpoint {
+    display: flex;
+    gap: 1rem;
     margin-bottom: 1rem;
   }
   
   .method-endpoint select,
   .method-endpoint input {
-    margin-right: 1rem;
+    flex: 1;
+    padding: 0.5rem;
+    font-size: 1rem;
+    border-radius: 4px;
+    border: 1px solid #ccc;
   }
   
+  /* Shared button style */
+  button {
+    background-color: #1890ff;
+    color: white;
+    border: none;
+    padding: 0.6rem 1rem;
+    font-size: 1rem;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: background-color 0.2s ease;
+  }
+  
+  button:hover {
+    background-color: #1471cc;
+  }
+  
+  /* Specialized buttons */
   .fill-button {
     margin-bottom: 1rem;
-    padding: 0.5rem 1rem;
-    cursor: pointer;
   }
   
   .send-button {
     margin-top: 1rem;
-    padding: 0.5rem 1rem;
-    cursor: pointer;
   }
   
+  /* Request body textarea */
   .request-body {
     width: 100%;
-    height: 100px;
+    height: 120px;
     margin-top: 1rem;
     font-family: monospace;
+    padding: 0.75rem;
+    font-size: 0.95rem;
+    border-radius: 4px;
+    border: 1px solid #ccc;
   }
   
+  /* Response box container */
+  .box {
+    margin-top: 2rem;
+    padding: 1rem;
+    border: 1px solid #e1e1e1;
+    background: #f9f9f9;
+    border-radius: 8px;
+  }
+  
+  .box h3 {
+    margin-top: 0;
+    font-size: 1.1rem;
+    color: #444;
+  }
+  
+  /* Highlighted assistant reply */
+  .assistant-response {
+    background-color: #e6f7ff;
+    padding: 1rem;
+    border-left: 4px solid #1890ff;
+    font-family: system-ui, sans-serif;
+    margin-bottom: 1rem;
+    white-space: pre-wrap;
+    border-radius: 4px;
+  }
+  
+  /* Monospaced formatted outputs */
+  .request-output,
   .response-output {
-    margin-top: 1rem;
     background: #f6f8fa;
     padding: 1rem;
     white-space: pre-wrap;
     word-break: break-word;
     user-select: text;
     font-family: monospace;
+    border-radius: 4px;
+    font-size: 0.9rem;
+    overflow-x: auto;
+    line-height: 1.4;
   }
   

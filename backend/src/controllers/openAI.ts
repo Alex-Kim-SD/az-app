@@ -9,7 +9,6 @@ const openai = new OpenAI({ apiKey: process.env.OPENAI_API_KEY });
 export const askGPT = async (req: Request, res: Response) => {
   try {
     const { question } = req.body;
-
     const response = await openai.chat.completions.create({
       model: 'gpt-3.5-turbo',
       messages: [
