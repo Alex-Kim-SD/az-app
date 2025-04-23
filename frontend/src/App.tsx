@@ -1,24 +1,28 @@
-import React from 'react';
-import logo from './logo.svg';
+import React, { useEffect, useState } from 'react';
 import './App.css';
+import { User } from './types/User';
+import UserList from './components/UserList';
+import CreateUserForm from './components/CreateUserForm';
 
 function App() {
+  const [users, setUsers] = useState<User[]>([]);
+
+  // Fetch users from backend
+  const fetchUsers = async () => {
+    const res = await fetch('http://localhost:4000/users');
+    const data = await res.json();
+    setUsers(data);
+  };
+
+  useEffect(() => {
+    fetchUsers();
+  }, []);
+
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload. Alex was here.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+      <h1>User Dashboard</h1>
+      <CreateUserForm onUserCreated={fetchUsers} />
+      <UserList users={users} onUserDeleted={fetchUsers} />
     </div>
   );
 }

@@ -7,7 +7,25 @@ export const getUsers = async (_req: Request, res: Response) => {
 };
 
 export const createUser = async (req: Request, res: Response) => {
-  const newUser = new User({ name: req.body.name });
-  await newUser.save();
-  res.status(201).json({ message: 'User created!', user: newUser });
+  const { name, email, role } = req.body;
+
+  try {
+    const newUser = new User({ name, email, role });
+    await newUser.save();
+    res.status(201).json({ message: 'User created!', user: newUser });
+  } catch (err) {
+    console.error('User creation failed:', err); // 👈 Add this to log error
+    res.status(500).json({ error: 'Failed to create user' });
+  }
 };
+
+
+export const deleteUser = async (req: Request, res: Response) => {
+  try {
+    await User.findByIdAndDelete(req.params.id);
+    res.json({ message: 'User deleted' });
+  } catch (err) {
+    res.status(500).json({ error: 'Failed to delete user' });
+  }
+};
+// This code defines the user-related routes for the Express application.
